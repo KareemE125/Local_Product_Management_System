@@ -1,0 +1,36 @@
+/* HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME */
+/* HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME */
+/* HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME HOME */
+
+
+main .btn:hover {
+    color: white;
+}
+
+main .form-control:focus {
+    border-color: #ffffff;
+    box-shadow: 0 0 0 0.18rem rgb(40 216 255);
+}
+
+main td{
+    vertical-align: middle;
+}
+
+main td .btn{
+    border: none;
+}
+
+table tbody{
+    counter-reset: rowNumber;
+}
+
+table tbody tr{
+    counter-increment: rowNumber;
+}
+
+table tbody tr td:first-child::before {
+    content: counter(rowNumber);
+    min-width: 1em;
+    margin-right: 0.5em;
+    text-align: left;
+}
