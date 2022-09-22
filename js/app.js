@@ -41,7 +41,7 @@ function makeTableRow(product)
             <button onclick="updateProduct()"  class="btn btn-outline-warning"><i class="fa-solid fa-edit"></i></button>
         </td>
         <td>
-            <button onclick="deleteProduct()" class="btn btn-outline-danger" ><i class="fa-solid fa-trash"></i></button>
+            <button onclick="deleteProduct(this)" class="btn btn-outline-danger" ><i class="fa-solid fa-trash"></i></button>
         </td>
     </tr>`
 }
@@ -92,9 +92,32 @@ function addProduct()
     tableBody.innerHTML += makeTableRow(product);
 }
 
-function deleteProduct()
+function deleteProduct(elem)
 {
-    console.log("Delete Function")
+    const childern = elem.parentElement.parentElement.childNodes;
+
+    let product = {
+        name : childern[3].innerHTML,
+        price : childern[5].innerHTML,
+        category : childern[7].innerHTML,
+        description : childern[9].innerHTML
+    }
+    
+    for (let i = 0; i < productsList.length; i++) 
+    {
+        if(
+            productsList[i].name == product.name && 
+            productsList[i].price == product.price && 
+            productsList[i].category == product.category && 
+            productsList[i].description == product.description 
+        )
+        {
+            productsList.splice(i,1);
+            localStorage.setItem('productsList',JSON.stringify(productsList));
+            init()
+            return
+        } 
+    }   
 }
 
 function updateProduct()
