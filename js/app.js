@@ -25,7 +25,10 @@ let productsList = [
     // },
 ];
 
-//localStorage.setItem('productsList',JSON.stringify(productsList))
+// localStorage.setItem('productsList',JSON.stringify(productsList))
+
+let productToBeUpdated = -1;
+
 
 init();
 
@@ -38,7 +41,7 @@ function makeTableRow(product)
         <td>${product.category}</td>
         <td>${product.description}</td>
         <td>
-            <button onclick="updateProduct()"  class="btn btn-outline-warning"><i class="fa-solid fa-edit"></i></button>
+            <button onclick="updateProduct(this)"  class="btn btn-outline-warning"><i class="fa-solid fa-edit"></i></button>
         </td>
         <td>
             <button onclick="deleteProduct(this)" class="btn btn-outline-danger" ><i class="fa-solid fa-trash"></i></button>
@@ -71,6 +74,15 @@ function clearInputFields()
     productDescription.value ='';
 }
 
+function refresh()
+{
+    // add to local storage
+    localStorage.setItem('productsList',JSON.stringify(productsList));
+
+    // call init()
+    init()
+}
+
 function addProduct()
 {
     const product = {
@@ -90,6 +102,7 @@ function addProduct()
 
     // add to GUI (table)
     tableBody.innerHTML += makeTableRow(product);
+
 }
 
 function deleteProduct(elem)
@@ -113,14 +126,63 @@ function deleteProduct(elem)
         )
         {
             productsList.splice(i,1);
-            localStorage.setItem('productsList',JSON.stringify(productsList));
-            init()
+            refresh()
             return
         } 
     }   
 }
 
-function updateProduct()
+function updateProduct(elem)
 { 
     console.log("Update Function")
+
+    const childern = elem.parentElement.parentElement.childNodes;
+
+    let product = {
+        name : childern[3].innerHTML,
+        price : childern[5].innerHTML,
+        category : childern[7].innerHTML,
+        description : childern[9].innerHTML
+    }
+
+    productName.value = product.name;
+    productPrice.value = product.price;
+    productCategory.value = product.category;
+    productDescription.value = product.description;
+
+    document.getElementById('addProductBtn').style.display = "none";
+    document.getElementById('saveUpdate').style.display = "block";
+    
+
+    for (let i = 0; i < productsList.length; i++) 
+    {
+        if(
+            productsList[i].name == product.name && 
+            productsList[i].price == product.price && 
+            productsList[i].category == product.category && 
+            productsList[i].description == product.description 
+        )
+        {
+            productToBeUpdated = i;
+            return
+        } 
+    }   
+}
+
+function cancelUpdateProduct()
+{
+    clearInputFields()
+    document.getElementById('addProductBtn').style.display = "inline-block";
+    document.getElementById('saveUpdate').style.display = "none";
+}
+
+function saveUpdateProduct()
+{
+    productsList[productToBeUpdated].name = productName.value
+    productsList[productToBeUpdated].price = productPrice.value 
+    productsList[productToBeUpdated].category = productCategory.value
+    productsList[productToBeUpdated].description = productDescription.value
+
+    cancelUpdateProduct()
+    refresh()
 }
