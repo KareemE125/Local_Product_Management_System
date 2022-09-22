@@ -4,25 +4,16 @@ const productCategory = document.getElementById('productCategoryInput');
 const productDescription = document.getElementById('productDescriptionInput');
 const tableBody = document.getElementById('tableBody');
 
+// uncomment the products list content and the localStorage setItem line to populate the list
+// then comment the localStorage setItem
+// then comment the products list content
+
 let productsList = [
-    // {
-    //     name:'Samsung A50',
-    //     price:'5500',
-    //     category:'Mobile (Smart Phones)',
-    //     description:'Good Quality'
-    // },
-    // {
-    //     name:'Oppo F9',
-    //     price:'9000',
-    //     category:'Mobile (Smart Phones)',
-    //     description:'Excellent Quality'
-    // },
-    // {
-    //     name:'LG Ultra Wide Q-LED 8K',
-    //     price:'62000',
-    //     category:'TV Screens',
-    //     description:'Great Quality'
-    // },
+    // {"name":"Samsung A50","price":"5500","category":"Mobile","description":"Good Quality"},
+    // {"name":"Oppo F9","price":"9000","category":"Mobile (Smart Phones)","description":"Excellent Quality"},
+    // {"name":"ISOtunes PRO","price":"2794","category":"Headphones","description":"Bluetooth, Hearing Protection"},
+    // {"name":"Xiaomi Mi 10T","price":"7000","category":"Smart Phones","description":"Great"},
+    // {"name":"Height Adjustable Standing Desk","price":"6588","category":"Office Furniture","description":"Electric Dual Motor - Black"}
 ];
 
 // localStorage.setItem('productsList',JSON.stringify(productsList))
