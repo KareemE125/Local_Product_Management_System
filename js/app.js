@@ -20,10 +20,12 @@ let productsList = [
 
 let productToBeUpdated = -1;
 
-
 init();
 
-function makeTableRow(product)
+
+/////// FUNCTIONS ///////
+
+function makeTableRow(index, product)
 {
     return `<tr>
         <td></td>
@@ -32,10 +34,10 @@ function makeTableRow(product)
         <td>${product.category}</td>
         <td>${product.description}</td>
         <td>
-            <button onclick="updateProduct(this)"  class="btn btn-outline-warning"><i class="fa-solid fa-edit"></i></button>
+            <button onclick="updateProduct(${index})"  class="btn btn-outline-warning"><i class="fa-solid fa-edit"></i></button>
         </td>
         <td>
-            <button onclick="deleteProduct(this)" class="btn btn-outline-danger" ><i class="fa-solid fa-trash"></i></button>
+            <button onclick="deleteProduct(${index})" class="btn btn-outline-danger" ><i class="fa-solid fa-trash"></i></button>
         </td>
     </tr>`
 }
@@ -49,9 +51,10 @@ function init()
         productsList = JSON.parse(storageList);
 
         let productsRows = ``;
-        productsList.forEach(product => {
-            productsRows += makeTableRow(product);
-        });
+        for (let i = 0; i < productsList.length; i++) 
+        {
+            productsRows += makeTableRow(i, productsList[i]);   
+        }
 
         tableBody.innerHTML = productsRows;
     }
@@ -92,72 +95,28 @@ function addProduct()
     localStorage.setItem('productsList',JSON.stringify(productsList));
 
     // add to GUI (table)
-    tableBody.innerHTML += makeTableRow(product);
+    tableBody.innerHTML += makeTableRow(productsList.length-1, product);
 
 }
 
-function deleteProduct(elem)
+function deleteProduct(index)
 {
-    const childern = elem.parentElement.parentElement.childNodes;
-
-    let product = {
-        name : childern[3].innerHTML,
-        price : childern[5].innerHTML,
-        category : childern[7].innerHTML,
-        description : childern[9].innerHTML
-    }
-    
-    for (let i = 0; i < productsList.length; i++) 
-    {
-        if(
-            productsList[i].name == product.name && 
-            productsList[i].price == product.price && 
-            productsList[i].category == product.category && 
-            productsList[i].description == product.description 
-        )
-        {
-            productsList.splice(i,1);
-            refresh()
-            return
-        } 
-    }   
+    productsList.splice(index,1);
+    refresh()
+  
 }
 
-function updateProduct(elem)
+function updateProduct(index)
 { 
-    console.log("Update Function")
-
-    const childern = elem.parentElement.parentElement.childNodes;
-
-    let product = {
-        name : childern[3].innerHTML,
-        price : childern[5].innerHTML,
-        category : childern[7].innerHTML,
-        description : childern[9].innerHTML
-    }
-
-    productName.value = product.name;
-    productPrice.value = product.price;
-    productCategory.value = product.category;
-    productDescription.value = product.description;
+    productName.value = productsList[index].name;
+    productPrice.value = productsList[index].price;
+    productCategory.value = productsList[index].category;
+    productDescription.value = productsList[index].description;
 
     document.getElementById('addProductBtn').style.display = "none";
     document.getElementById('saveUpdate').style.display = "block";
     
-
-    for (let i = 0; i < productsList.length; i++) 
-    {
-        if(
-            productsList[i].name == product.name && 
-            productsList[i].price == product.price && 
-            productsList[i].category == product.category && 
-            productsList[i].description == product.description 
-        )
-        {
-            productToBeUpdated = i;
-            return
-        } 
-    }   
+    productToBeUpdated = index;
 }
 
 function cancelUpdateProduct()
@@ -179,7 +138,6 @@ function saveUpdateProduct()
 }
 
 
-
 function search(word)
 {
     if(!word.length)
@@ -193,7 +151,7 @@ function search(word)
     {
         if( productsList[i].name.toLowerCase().includes(word.toLowerCase()) )
         {
-            productsRows += makeTableRow(productsList[i]);   
+            productsRows += makeTableRow(i, productsList[i]);   
         }
     }
     tableBody.innerHTML = productsRows;
