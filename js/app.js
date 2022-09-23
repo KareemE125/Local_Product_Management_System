@@ -177,3 +177,24 @@ function saveUpdateProduct()
     cancelUpdateProduct()
     refresh()
 }
+
+
+
+function search(word)
+{
+    if(!word.length)
+    {
+        init()
+        return
+    }
+
+    let productsRows = ``;
+    for(let i = 0; i < productsList.length; i++)
+    {
+        if( productsList[i].name.toLowerCase().includes(word.toLowerCase()) )
+        {
+            productsRows += makeTableRow(productsList[i]);   
+        }
+    }
+    tableBody.innerHTML = productsRows;
+}
