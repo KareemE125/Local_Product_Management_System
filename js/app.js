@@ -95,8 +95,7 @@ function addProduct()
     localStorage.setItem('productsList',JSON.stringify(productsList));
 
     // add to GUI (table)
-    tableBody.innerHTML += makeTableRow(productsList.length-1, product);
-
+    tableBody.insertAdjacentHTML('beforeend',makeTableRow(productsList.length-1, product));
 }
 
 function deleteProduct(index)
