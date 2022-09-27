@@ -26,7 +26,6 @@ table tbody{
 
 table tbody tr{
     counter-increment: rowNumber;
-    position: relative;
 }
 
 table tbody tr td:first-child::before {
@@ -36,16 +35,6 @@ table tbody tr td:first-child::before {
     text-align: left;
 }
 
-table tbody tr::after{
-    content:'';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    transition: 0.2s;
-}
-
-table tbody tr:hover::after{
+table tbody tr:hover{
     background-color: #0dcaf014;    
 }
